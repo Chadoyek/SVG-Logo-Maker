@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 
+const generateSVG = require('./lib/shapes.js');
 
 
 criteria = [
@@ -21,3 +22,15 @@ criteria = [
     type: 'input',
     name: 'shapeColor'}
 ]
+
+
+function writeToFile(fileName, criteria) {
+    inquirer
+    .prompt(criteria).then((data) => {
+        fs.writeFile(fileName, generateSVG(data), (err) =>
+        err ? console.log(err) : console.log('Successfully created SVG file!')
+        )});
+}
+
+writeToFile('logo.svg', criteria)
+
